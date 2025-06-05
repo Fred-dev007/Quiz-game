@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,59 +9,83 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-    
+
     * {
       font-family: 'Poppins', sans-serif;
     }
-    
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-    
+
     @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+      100% {
+        transform: scale(1);
+      }
     }
-    
-    .fade-in { animation: fadeIn 0.5s ease-out; }
-    .btn-option:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
-    
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .btn-option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
     .bg-gradient {
       background: linear-gradient(135deg, #6366f1, #8b5cf6);
     }
-    
+
     .progress-bar {
       height: 10px;
       border-radius: 5px;
       background: linear-gradient(to right, #8b5cf6, #ec4899);
       transition: width 0.5s ease-in-out;
     }
-    
+
     .badge {
       animation: pulse 2s infinite;
     }
-    
+
     .option-correct {
       background: linear-gradient(135deg, #10b981, #34d399) !important;
       color: white !important;
       border: none !important;
     }
-    
+
     .option-incorrect {
       background: linear-gradient(135deg, #ef4444, #f87171) !important;
       color: white !important;
       border: none !important;
     }
-    
+
     .glow {
       box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 min-h-screen flex flex-col items-center justify-center p-4">
-  <div class="max-w-3xl w-full bg-white/10 backdrop-blur-lg rounded-3xl shadow-xl p-6 space-y-6 border border-white/20 glow">
+
+<body
+  class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 min-h-screen flex flex-col items-center justify-center p-4">
+  <div
+    class="max-w-3xl w-full bg-white/10 backdrop-blur-lg rounded-3xl shadow-xl p-6 space-y-6 border border-white/20 glow">
     <!-- Header avec titre et score -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-2">
       <div class="flex items-center gap-3">
@@ -71,20 +96,20 @@
           Code & Culture
         </h1>
       </div>
-      
+
       <div class="flex gap-4">
         <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl flex items-center gap-2 border border-white/20">
           <i class="fas fa-star text-yellow-300"></i>
           <span class="text-white font-bold text-xl"><span id="score">0</span> pts</span>
         </div>
-        
+
         <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl flex items-center gap-2 border border-white/20">
           <i class="fas fa-trophy text-amber-400"></i>
           <span class="text-white font-bold text-xl"><span id="streak">0</span>x</span>
         </div>
       </div>
     </div>
-    
+
     <!-- Barre de progression -->
     <div class="mt-2">
       <div class="flex justify-between text-white mb-1">
@@ -95,36 +120,41 @@
         <div id="progress-bar" class="progress-bar h-3 rounded-full" style="width: 0%"></div>
       </div>
     </div>
-    
+
     <!-- Conteneur principal -->
     <div id="game-container">
       <!-- Zone d'énigme -->
-      <div id="enigme-box" class="text-xl font-medium text-white bg-white/10 backdrop-blur-sm rounded-2xl p-6 fade-in min-h-[150px] flex items-center justify-center text-center border border-white/20">
+      <div id="enigme-box"
+        class="text-xl font-medium text-white bg-white/10 backdrop-blur-sm rounded-2xl p-6 fade-in min-h-[150px] flex items-center justify-center text-center border border-white/20">
         <p>Prêt à tester vos connaissances ?</p>
       </div>
-      
+
       <!-- Options de réponse -->
       <div id="options" class="grid grid-cols-1 gap-3 mt-6"></div>
-      
+
       <!-- Feedback -->
       <div id="feedback" class="text-center font-semibold text-lg mt-4 min-h-[30px]"></div>
-      
+
       <!-- Boutons d'action -->
       <div class="flex flex-col sm:flex-row justify-center gap-3 mt-6">
-        <button id="next-btn" onclick="chargerEnigmeSuivante()" class="hidden bg-gradient text-white px-6 py-3 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+        <button id="next-btn" onclick="chargerEnigmeSuivante()"
+          class="hidden bg-gradient text-white px-6 py-3 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
           Suivant <i class="fas fa-arrow-right ml-2"></i>
         </button>
-        
-        <button id="show-answers-btn" onclick="afficherToutesLesEnigmes()" class="hidden bg-white/20 text-white px-6 py-3 rounded-xl font-semibold transition-all hover:bg-white/30 border border-white/30">
+
+        <button id="show-answers-btn" onclick="afficherToutesLesEnigmes()"
+          class="hidden bg-white/20 text-white px-6 py-3 rounded-xl font-semibold transition-all hover:bg-white/30 border border-white/30">
           Voir les réponses <i class="fas fa-book-open ml-2"></i>
         </button>
       </div>
     </div>
   </div>
-  
+
   <!-- Tableau des énigmes -->
-  <div id="tableau-enigmes" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden justify-center items-center p-4 z-50">
-    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl max-w-4xl w-full p-8 max-h-[90vh] overflow-y-auto border border-white/20 shadow-2xl">
+  <div id="tableau-enigmes"
+    class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden justify-center items-center p-4 z-50">
+    <div
+      class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl max-w-4xl w-full p-8 max-h-[90vh] overflow-y-auto border border-white/20 shadow-2xl">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-white flex items-center gap-2">
           <i class="fas fa-book text-purple-400"></i> Toutes les Énigmes & Réponses
@@ -133,7 +163,7 @@
           <i class="fas fa-times"></i>
         </button>
       </div>
-      
+
       <div class="bg-gradient-to-r from-purple-900/50 to-pink-900/50 rounded-xl p-4 mb-6">
         <div class="flex flex-wrap justify-center gap-6">
           <div class="text-center">
@@ -150,7 +180,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="overflow-x-auto">
         <table class="w-full table-auto rounded-xl overflow-hidden">
           <thead class="bg-gradient-to-r from-indigo-700 to-purple-700 text-left">
@@ -164,9 +194,10 @@
           <tbody id="table-body" class="text-sm text-gray-300 bg-gray-800/50"></tbody>
         </table>
       </div>
-      
+
       <div class="flex justify-center mt-8">
-        <button onclick="recommencerQuiz()" class="bg-gradient text-white px-8 py-3 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
+        <button onclick="recommencerQuiz()"
+          class="bg-gradient text-white px-8 py-3 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
           <i class="fas fa-redo mr-2"></i> Recommencer le quiz
         </button>
       </div>
@@ -554,7 +585,420 @@
         options: ["Inde", "Chine", "Russie", "Japon"],
         reponse: "Russie"
       },
-      // ... (continuer jusqu'à 200)
+      // Développement Web Avancé (15 questions)
+      {
+        question: "Quelle est la complexité temporelle de l'algorithme de tri par tas (heap sort) dans le pire des cas ?",
+        options: ["O(n)", "O(n log n)", "O(n²)", "O(log n)"],
+        reponse: "O(n log n)"
+      },
+      {
+        question: "En JavaScript, que retourne typeof null ?",
+        options: ["null", "undefined", "object", "boolean"],
+        reponse: "object"
+      },
+      {
+        question: "Quel design pattern est implémenté par les Promises en JavaScript ?",
+        options: ["Observer", "Singleton", "Factory", "Monad"],
+        reponse: "Monad"
+      },
+      {
+        question: "En CSS, quelle propriété définit l'ordre de superposition des contextes d'empilement ?",
+        options: ["z-index", "stack-order", "layer-index", "position-order"],
+        reponse: "z-index"
+      },
+      {
+        question: "Quel algorithme de consensus est utilisé par Ethereum 2.0 ?",
+        options: ["Proof of Work", "Proof of Stake", "Delegated Proof of Stake", "Practical Byzantine Fault Tolerance"],
+        reponse: "Proof of Stake"
+      },
+      {
+        question: "En React, quel hook permet d'optimiser les performances en mémorisant le résultat d'un calcul ?",
+        options: ["useCallback", "useMemo", "useEffect", "useRef"],
+        reponse: "useMemo"
+      },
+      {
+        question: "Quelle est la différence principale entre TCP et UDP ?",
+        options: ["TCP est plus rapide", "UDP garantit la livraison", "TCP garantit l'ordre des données", "UDP est plus sécurisé"],
+        reponse: "TCP garantit l'ordre des données"
+      },
+      {
+        question: "En Python, quelle méthode magic est appelée lors de l'utilisation de l'opérateur 'with' ?",
+        options: ["__enter__", "__init__", "__call__", "__new__"],
+        reponse: "__enter__"
+      },
+      {
+        question: "Quel est le principe de la programmation fonctionnelle qui interdit la modification des données ?",
+        options: ["Immutabilité", "Récursion", "Composition", "Currying"],
+        reponse: "Immutabilité"
+      },
+      {
+        question: "En SQL, quelle clause permet de filtrer les groupes après un GROUP BY ?",
+        options: ["WHERE", "FILTER", "HAVING", "SELECT"],
+        reponse: "HAVING"
+      },
+      {
+        question: "Quel protocole cryptographique est utilisé pour sécuriser les connexions WebSocket ?",
+        options: ["WSS", "TLS", "SSL", "HTTPS"],
+        reponse: "WSS"
+      },
+      {
+        question: "En TypeScript, que signifie le type 'never' ?",
+        options: ["Type optionnel", "Type qui ne peut jamais être atteint", "Type null", "Type indéfini"],
+        reponse: "Type qui ne peut jamais être atteint"
+      },
+      {
+        question: "Quelle technique permet d'éviter les attaques de type Cross-Site Scripting (XSS) ?",
+        options: ["Sanitisation des entrées", "Chiffrement des données", "Authentification forte", "Compression des données"],
+        reponse: "Sanitisation des entrées"
+      },
+      {
+        question: "En architecture microservices, quel pattern permet de gérer les transactions distribuées ?",
+        options: ["Saga Pattern", "Circuit Breaker", "Event Sourcing", "CQRS"],
+        reponse: "Saga Pattern"
+      },
+      {
+        question: "Quel est le nom de l'algorithme de consensus utilisé par Bitcoin ?",
+        options: ["Proof of Work", "Proof of Stake", "Hashgraph", "Practical Byzantine Fault Tolerance"],
+        reponse: "Proof of Work"
+      },
+
+      // Sciences et Mathématiques Avancées (15 questions)
+      {
+        question: "Quel est le nom du paradoxe qui stipule que l'ensemble de tous les ensembles qui ne se contiennent pas eux-mêmes ?",
+        options: ["Paradoxe de Zénon", "Paradoxe de Russell", "Paradoxe de Cantor", "Paradoxe de Gödel"],
+        reponse: "Paradoxe de Russell"
+      },
+      {
+        question: "En mécanique quantique, quel principe stipule qu'on ne peut pas mesurer simultanément la position et la vitesse d'une particule ?",
+        options: ["Principe de Pauli", "Principe d'incertitude de Heisenberg", "Principe de superposition", "Principe de correspondance"],
+        reponse: "Principe d'incertitude de Heisenberg"
+      },
+      {
+        question: "Quel est le nom de la constante mathématique égale à la limite de (1 + 1/n)^n quand n tend vers l'infini ?",
+        options: ["π (pi)", "e (nombre d'Euler)", "φ (nombre d'or)", "γ (constante d'Euler-Mascheroni)"],
+        reponse: "e (nombre d'Euler)"
+      },
+      {
+        question: "En thermodynamique, quel est le nom du cycle théorique le plus efficace pour une machine thermique ?",
+        options: ["Cycle de Carnot", "Cycle de Rankine", "Cycle de Brayton", "Cycle d'Otto"],
+        reponse: "Cycle de Carnot"
+      },
+      {
+        question: "Quel mathématicien a démontré que certains énoncés mathématiques sont indécidables ?",
+        options: ["Kurt Gödel", "Bertrand Russell", "David Hilbert", "Alan Turing"],
+        reponse: "Kurt Gödel"
+      },
+      {
+        question: "En théorie des graphes, quel est le nom du problème qui consiste à déterminer si un graphe possède un cycle hamiltonien ?",
+        options: ["Problème du voyageur de commerce", "Problème de Hamilton", "Problème de coloration", "Problème de flot maximal"],
+        reponse: "Problème de Hamilton"
+      },
+      {
+        question: "Quelle particule élémentaire est responsable de la masse des autres particules selon le modèle standard ?",
+        options: ["Boson de Higgs", "Photon", "Électron", "Neutrino"],
+        reponse: "Boson de Higgs"
+      },
+      {
+        question: "En chimie organique, quel est le nom de la réaction qui permet de former une liaison C-C via un couplage catalysé au palladium ?",
+        options: ["Réaction de Suzuki", "Réaction de Grignard", "Réaction de Friedel-Crafts", "Réaction de Wittig"],
+        reponse: "Réaction de Suzuki"
+      },
+      {
+        question: "Quel est le nom de la conjecture mathématique qui stipule que tout nombre pair supérieur à 2 est la somme de deux nombres premiers ?",
+        options: ["Conjecture de Goldbach", "Conjecture de Riemann", "Conjecture de Collatz", "Conjecture de Fermat"],
+        reponse: "Conjecture de Goldbach"
+      },
+      {
+        question: "En relativité générale, comment appelle-t-on la déformation de l'espace-temps causée par la masse ?",
+        options: ["Courbure de l'espace-temps", "Dilatation temporelle", "Contraction des longueurs", "Effet Doppler"],
+        reponse: "Courbure de l'espace-temps"
+      },
+      {
+        question: "Quel est le nom de la théorie qui unifie la mécanique quantique et la relativité restreinte ?",
+        options: ["Théorie quantique des champs", "Théorie des cordes", "Théorie de la gravité quantique", "Théorie M"],
+        reponse: "Théorie quantique des champs"
+      },
+      {
+        question: "En statistiques, quel théorème stipule que la moyenne d'un grand nombre d'échantillons suit une loi normale ?",
+        options: ["Théorème central limite", "Loi des grands nombres", "Théorème de Bayes", "Inégalité de Tchebychev"],
+        reponse: "Théorème central limite"
+      },
+      {
+        question: "Quelle est la complexité temporelle de l'algorithme de multiplication de matrices de Strassen ?",
+        options: ["O(n³)", "O(n^2.807)", "O(n²)", "O(n log n)"],
+        reponse: "O(n^2.807)"
+      },
+      {
+        question: "En géométrie différentielle, comment appelle-t-on une variété dont la courbure est constamment nulle ?",
+        options: ["Variété plate", "Variété riemannienne", "Variété kählérienne", "Variété symplectique"],
+        reponse: "Variété plate"
+      },
+      {
+        question: "Quel est le nom de l'équation qui décrit l'évolution temporelle d'un système quantique ?",
+        options: ["Équation de Schrödinger", "Équation de Dirac", "Équation de Klein-Gordon", "Équation de Maxwell"],
+        reponse: "Équation de Schrödinger"
+      },
+
+      // Culture Générale Avancée et Afrique (10 questions)
+      {
+        question: "Quel empire africain médiéval était célèbre pour sa richesse en or et le pèlerinage de Mansa Moussa ?",
+        options: ["Empire du Ghana", "Empire du Mali", "Empire Songhaï", "Empire du Kanem-Bornou"],
+        reponse: "Empire du Mali"
+      },
+      {
+        question: "Quelle langue bantoue est parlée par le plus grand nombre de personnes en Afrique ?",
+        options: ["Swahili", "Zulu", "Xhosa", "Shona"],
+        reponse: "Swahili"
+      },
+      {
+        question: "Quel philosophe béninois a développé la théorie de l'ethnophilosophie ?",
+        options: ["Paulin Hountondji", "Stanislas Adotevi", "Kwame Nkrumah", "Léopold Sédar Senghor"],
+        reponse: "Paulin Hountondji"
+      },
+      {
+        question: "En quelle année l'Organisation de l'Unité Africaine (OUA) a-t-elle été créée ?",
+        options: ["1960", "1963", "1965", "1968"],
+        reponse: "1963"
+      },
+      {
+        question: "Quel roi du Dahomey a résisté le plus longtemps à la colonisation française ?",
+        options: ["Glélé", "Béhanzin", "Ghezo", "Agoli-Agbo"],
+        reponse: "Béhanzin"
+      },
+      {
+        question: "Quelle est la profondeur maximale approximative de la fosse des Mariannes ?",
+        options: ["10 000 m", "11 000 m", "12 000 m", "13 000 m"],
+        reponse: "11 000 m"
+      },
+      {
+        question: "Quel compositeur a écrit 'L'Art de la Fugue' ?",
+        options: ["Jean-Sébastien Bach", "Wolfgang Amadeus Mozart", "Ludwig van Beethoven", "Antonio Vivaldi"],
+        reponse: "Jean-Sébastien Bach"
+      },
+      {
+        question: "En quelle année le Bénin a-t-il organisé sa première Conférence Nationale Souveraine ?",
+        options: ["1989", "1990", "1991", "1992"],
+        reponse: "1990"
+      },
+      {
+        question: "Quel écrivain béninois a remporté le Prix Renaudot en 2021 ?",
+        options: ["Olympe Bhêly-Quenum", "Florent Couao-Zotti", "Mohamed Mbougar Sarr", "Alain Mabanckou"],
+        reponse: "Mohamed Mbougar Sarr"
+      },
+      {
+        question: "Quelle technique agricole traditionnelle béninoise consiste à cultiver sur des buttes dans les zones inondables ?",
+        options: ["Système Whedodo", "Système Ouémé", "Système Mono", "Système Couffo"],
+        reponse: "Système Whedodo"
+      },
+      // JavaScript Ultra Avancé (10 questions)
+      {
+        question: "Que retourne l'expression: [1,2,3].map(parseInt) en JavaScript ?",
+        options: ["[1,2,3]", "[1,NaN,NaN]", "[1,2,NaN]", "[NaN,NaN,NaN]"],
+        reponse: "[1,NaN,NaN]"
+      },
+      {
+        question: "En JavaScript, que fait l'opérateur de coalescence nullish (??) avec 0 ?? 'default' ?",
+        options: ["'default'", "0", "null", "undefined"],
+        reponse: "0"
+      },
+      {
+        question: "Quel est le résultat de: (function(){return typeof arguments})() ?",
+        options: ["'object'", "'function'", "'array'", "'undefined'"],
+        reponse: "'object'"
+      },
+      {
+        question: "En JavaScript, que retourne: +'5' + +'3' - + '2' ?",
+        options: ["6", "8", "531", "NaN"],
+        reponse: "6"
+      },
+      {
+        question: "Que fait WeakMap comparé à Map en JavaScript ?",
+        options: ["Accepte seulement des objets comme clés", "Est plus rapide", "Peut être itéré", "Stocke des références faibles"],
+        reponse: "Accepte seulement des objets comme clés"
+      },
+      {
+        question: "En JavaScript, que retourne: []+[] ?",
+        options: ["[]", "''", "undefined", "0"],
+        reponse: "''"
+      },
+      {
+        question: "Quelle est la différence entre call(), apply() et bind() ?",
+        options: ["call accepte des arguments séparés", "apply accepte un tableau", "bind retourne une nouvelle fonction", "Toutes les réponses"],
+        reponse: "Toutes les réponses"
+      },
+      {
+        question: "En JavaScript, que fait Symbol.iterator ?",
+        options: ["Définit comment un objet est itéré", "Crée un symbole unique", "Définit une propriété privée", "Convertit en string"],
+        reponse: "Définit comment un objet est itéré"
+      },
+      {
+        question: "Que retourne: typeof class{} en JavaScript ?",
+        options: ["'class'", "'function'", "'object'", "'constructor'"],
+        reponse: "'function'"
+      },
+      {
+        question: "En JavaScript, que fait l'opérateur void ?",
+        options: ["Supprime une variable", "Retourne undefined", "Annule une opération", "Vide un objet"],
+        reponse: "Retourne undefined"
+      },
+
+      // Python Ultra Avancé (10 questions)
+      {
+        question: "En Python, que fait le décorateur @property.setter ?",
+        options: ["Définit un getter", "Définit un setter", "Définit un déleter", "Définit une méthode statique"],
+        reponse: "Définit un setter"
+      },
+      {
+        question: "Que retourne: list(zip(*[[1,2], [3,4]])) en Python ?",
+        options: ["[(1,3), (2,4)]", "[(1,2), (3,4)]", "[[1,3], [2,4]]", "Error"],
+        reponse: "[(1,3), (2,4)]"
+      },
+      {
+        question: "En Python, quelle est la différence entre __new__ et __init__ ?",
+        options: ["__new__ crée l'instance", "__init__ initialise l'instance", "Les deux", "__new__ est statique"],
+        reponse: "Les deux"
+      },
+      {
+        question: "Que fait le module `dis` en Python ?",
+        options: ["Désassemble le bytecode", "Analyse les distances", "Gère les disques", "Distribue les calculs"],
+        reponse: "Désassemble le bytecode"
+      },
+      {
+        question: "En Python, que fait l'expression: {*range(3)} ?",
+        options: ["{0,1,2}", "set(0,1,2)", "Error", "[0,1,2]"],
+        reponse: "{0,1,2}"
+      },
+      {
+        question: "Quelle méthode permet de personnaliser l'opérateur @ en Python ?",
+        options: ["__matmul__", "__mul__", "__at__", "__operator__"],
+        reponse: "__matmul__"
+      },
+      {
+        question: "En Python, que fait `sys.getsizeof()` ?",
+        options: ["Taille du fichier", "Taille mémoire de l'objet", "Nombre d'éléments", "Taille du type"],
+        reponse: "Taille mémoire de l'objet"
+      },
+      {
+        question: "Que retourne: type(type) en Python ?",
+        options: ["<class 'type'>", "<class 'object'>", "<class 'class'>", "<class 'metaclass'>"],
+        reponse: "<class 'type'>"
+      },
+      {
+        question: "En Python, à quoi sert `__slots__` ?",
+        options: ["Limite les attributs d'instance", "Définit des emplacements", "Crée des slots de mémoire", "Gère l'héritage"],
+        reponse: "Limite les attributs d'instance"
+      },
+      {
+        question: "Que fait l'opérateur := en Python 3.8+ ?",
+        options: ["Assignation walrus", "Comparaison", "Concaténation", "Opérateur ternaire"],
+        reponse: "Assignation walrus"
+      },
+
+      // C/C++ Ultra Avancé (5 questions)
+      {
+        question: "En C++, que fait le mot-clé `constexpr` ?",
+        options: ["Évaluation à la compilation", "Constante d'exécution", "Expression régulière", "Contrainte de type"],
+        reponse: "Évaluation à la compilation"
+      },
+      {
+        question: "Quelle est la différence entre malloc() et calloc() en C ?",
+        options: ["calloc initialise à zéro", "malloc est plus rapide", "calloc alloue plusieurs blocs", "Les deux premières"],
+        reponse: "Les deux premières"
+      },
+      {
+        question: "En C++, que fait l'opérateur de résolution de portée :: ?",
+        options: ["Accède aux membres de classe", "Définit la portée globale", "Résout l'ambiguïté", "Toutes les réponses"],
+        reponse: "Toutes les réponses"
+      },
+      {
+        question: "Que fait `std::move()` en C++11 ?",
+        options: ["Déplace physiquement l'objet", "Cast vers rvalue reference", "Copie l'objet", "Supprime l'objet"],
+        reponse: "Cast vers rvalue reference"
+      },
+      {
+        question: "En C, que fait l'opérateur sizeof avec un tableau passé en paramètre ?",
+        options: ["Taille du tableau", "Taille du pointeur", "Nombre d'éléments", "Erreur de compilation"],
+        reponse: "Taille du pointeur"
+      },
+
+      // Java Ultra Avancé (5 questions)
+      {
+        question: "En Java, quelle est la différence entre == et .equals() pour les String ?",
+        options: ["== compare les références", ".equals() compare le contenu", "Les deux", "Aucune différence"],
+        reponse: "Les deux"
+      },
+      {
+        question: "Que fait le mot-clé `volatile` en Java ?",
+        options: ["Empêche l'optimisation", "Garantit la visibilité", "Synchronise l'accès", "Toutes les réponses"],
+        reponse: "Garantit la visibilité"
+      },
+      {
+        question: "En Java, que fait l'annotation @FunctionalInterface ?",
+        options: ["Marque une interface fonctionnelle", "Permet les lambdas", "Vérifie une seule méthode abstraite", "Toutes les réponses"],
+        reponse: "Toutes les réponses"
+      },
+      {
+        question: "Quelle est la différence entre ArrayList et LinkedList ?",
+        options: ["ArrayList utilise un tableau", "LinkedList utilise des pointeurs", "Performances différentes", "Toutes les réponses"],
+        reponse: "Toutes les réponses"
+      },
+      {
+        question: "En Java, que fait Optional.ofNullable() ?",
+        options: ["Crée un Optional vide si null", "Lance une exception si null", "Retourne la valeur", "Crée un Optional toujours"],
+        reponse: "Crée un Optional vide si null"
+      },
+
+      // Autres Langages et Concepts Avancés (10 questions)
+      {
+        question: "En Rust, que garantit le système d'ownership ?",
+        options: ["Pas de fuites mémoire", "Pas de data races", "Pas de pointeurs pendants", "Toutes les réponses"],
+        reponse: "Toutes les réponses"
+      },
+      {
+        question: "En Go, que fait le mot-clé `defer` ?",
+        options: ["Exécute à la fin de la fonction", "Retarde l'exécution", "Gère les erreurs", "Libère la mémoire"],
+        reponse: "Exécute à la fin de la fonction"
+      },
+      {
+        question: "En TypeScript, que fait le type `never` ?",
+        options: ["Type qui n'arrive jamais", "Type vide", "Type d'erreur", "Type indéfini"],
+        reponse: "Type qui n'arrive jamais"
+      },
+      {
+        question: "En PHP, quelle est la différence entre include et require ?",
+        options: ["require arrête l'exécution si erreur", "include continue malgré l'erreur", "Les deux", "Aucune différence"],
+        reponse: "Les deux"
+      },
+      {
+        question: "En Ruby, que fait le symbole & avant un paramètre ?",
+        options: ["Convertit en bloc", "Référence", "Opérateur binaire", "Symbole"],
+        reponse: "Convertit en bloc"
+      },
+      {
+        question: "En Haskell, que représente le type Maybe ?",
+        options: ["Valeur optionnelle", "Erreur possible", "Calcul différé", "Type polymorphe"],
+        reponse: "Valeur optionnelle"
+      },
+      {
+        question: "En assembly x86, que fait l'instruction MOV ?",
+        options: ["Déplace des données", "Copie des données", "Charge des données", "Toutes les réponses"],
+        reponse: "Copie des données"
+      },
+      {
+        question: "En Kotlin, que fait le mot-clé `by` ?",
+        options: ["Délégation de propriété", "Héritage", "Interface", "Extension"],
+        reponse: "Délégation de propriété"
+      },
+      {
+        question: "En Scala, que représente `_` dans une fonction ?",
+        options: ["Paramètre anonyme", "Placeholder", "Wildcard", "Toutes les réponses"],
+        reponse: "Toutes les réponses"
+      },
+      {
+        question: "En Erlang/Elixir, que signifie le modèle Actor ?",
+        options: ["Processus légers isolés", "Communication par messages", "Tolérance aux pannes", "Toutes les réponses"],
+        reponse: "Toutes les réponses"
+      }
     ];
 
     // Variables d'état du jeu
@@ -596,14 +1040,14 @@
       index = 0;
       quizTermine = false;
       userAnswers = Array(30).fill(null);
-      
+
       // Mélanger les énigmes et prendre les 30 premières
       currentEnigmes = shuffleArray([...enigmes]).slice(0, 30);
-      
+
       updateScore();
       updateProgress();
       chargerEnigme();
-      
+
       nextBtn.classList.add('hidden');
       showAnswersBtn.classList.add('hidden');
     }
@@ -611,11 +1055,11 @@
     // Charger une énigme
     function chargerEnigme() {
       if (quizTermine) return;
-      
+
       const enigme = currentEnigmes[index];
       enigmeBox.innerHTML = `<p class="text-lg md:text-xl">${enigme.question}</p>`;
       enigmeBox.classList.add("fade-in");
-      
+
       optionsContainer.innerHTML = "";
       enigme.options.forEach(option => {
         const button = document.createElement("button");
@@ -624,20 +1068,20 @@
         button.onclick = () => verifierReponse(option);
         optionsContainer.appendChild(button);
       });
-      
+
       feedbackElement.textContent = "";
       feedbackElement.className = "text-center font-semibold text-lg min-h-[30px]";
-      
+
       setTimeout(() => enigmeBox.classList.remove("fade-in"), 500);
     }
 
     // Vérifier la réponse
     function verifierReponse(selection) {
       if (quizTermine) return;
-      
+
       const bonneReponse = currentEnigmes[index].reponse;
       userAnswers[index] = selection;
-      
+
       // Désactiver tous les boutons
       const optionButtons = document.querySelectorAll('.btn-option');
       optionButtons.forEach(btn => {
@@ -646,7 +1090,7 @@
           btn.classList.add('option-correct');
         }
       });
-      
+
       // Trouver le bouton sélectionné
       optionButtons.forEach(btn => {
         if (btn.textContent === selection) {
@@ -654,35 +1098,35 @@
             // Bonne réponse
             feedbackElement.textContent = "✅ Bravo, bonne réponse !";
             feedbackElement.className = "text-green-400 text-center font-semibold text-lg min-h-[30px]";
-            
+
             // Mise à jour du score et de la série
             score += 10;
             currentStreak++;
             streak = currentStreak;
             if (currentStreak > maxStreak) maxStreak = currentStreak;
-            
+
             // Animation du bouton
             btn.classList.add('option-correct');
           } else {
             // Mauvaise réponse
             feedbackElement.textContent = `❌ Mauvaise réponse. La bonne réponse était: ${bonneReponse}`;
             feedbackElement.className = "text-red-400 text-center font-semibold text-lg min-h-[30px]";
-            
+
             // Réinitialiser la série
             currentStreak = 0;
             streak = 0;
-            
+
             // Animation du bouton
             btn.classList.add('option-incorrect');
           }
         }
       });
-      
+
       updateScore();
-      
+
       // Afficher le bouton "Suivant"
       nextBtn.classList.remove('hidden');
-      
+
       // Si c'est la dernière question, terminer le quiz
       if (index === currentEnigmes.length - 1) {
         nextBtn.textContent = "Terminer le quiz";
@@ -692,9 +1136,9 @@
     // Charger l'énigme suivante
     function chargerEnigmeSuivante() {
       nextBtn.classList.add('hidden');
-      
+
       index++;
-      
+
       if (index < currentEnigmes.length) {
         updateProgress();
         chargerEnigme();
@@ -708,10 +1152,10 @@
       quizTermine = true;
       feedbackElement.textContent = `🎉 Quiz terminé ! Votre score final: ${score} points`;
       feedbackElement.className = "text-yellow-300 text-center font-bold text-xl min-h-[30px]";
-      
+
       // Cacher les options
       optionsContainer.innerHTML = "";
-      
+
       // Afficher le bouton pour voir les réponses
       showAnswersBtn.classList.remove('hidden');
     }
@@ -734,14 +1178,14 @@
       document.getElementById("final-score").textContent = score;
       document.getElementById("correct-count").textContent = userAnswers.filter((ans, i) => ans === currentEnigmes[i].reponse).length;
       document.getElementById("max-streak").textContent = maxStreak;
-      
+
       const tableau = document.getElementById("table-body");
       tableau.innerHTML = "";
-      
+
       currentEnigmes.forEach((e, i) => {
         const userAnswer = userAnswers[i] || "Non répondue";
         const isCorrect = userAnswer === e.reponse;
-        
+
         tableau.innerHTML += `
           <tr class="border-b border-gray-700 hover:bg-gray-700/50">
             <td class="p-4 font-medium ${isCorrect ? 'text-green-400' : 'text-red-400'}">${i + 1}</td>
@@ -751,7 +1195,7 @@
           </tr>
         `;
       });
-      
+
       document.getElementById("tableau-enigmes").classList.remove("hidden");
       document.getElementById("tableau-enigmes").classList.add("flex");
     }
@@ -772,4 +1216,5 @@
     document.addEventListener('DOMContentLoaded', initGame);
   </script>
 </body>
+
 </html>
